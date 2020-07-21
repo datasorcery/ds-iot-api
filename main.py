@@ -15,9 +15,8 @@ def hello_world():
 # GET /sensor/<id> -> Retorna última leitura do sensor
 # PUT /sensor/<id> -> Salva leitura do sensor
 
-@app.route('/sensor', methods=['GET', 'PUT'])
-@app.route('/sensor/<id>', methods=['GET', 'PUT'])
-def sensor(id=None):
+@app.route('/sensor/<dev_id>', methods=['GET', 'PUT'])
+def sensor(dev_id):
     """HTTP Cloud Funtion.
     Args:
         request (flask.Request): The request object.
@@ -30,19 +29,27 @@ def sensor(id=None):
     #request_json = request.get_json(silent=True)
     #request_args = request.args
 
-    if id is not None:
-        print('id')
-        ret = {'id': id, 'temp': 25, 'humid': 75}
+    # Check conditions and methods
+    if dev_id is None:
+        ret = ('Invalid ID', 400)
     else:
-        ret = 'NO <ID>'
+        if request.method == 'GET':
+            ret = sensor_get(dev_id)
+        elif request.method == 'PUT':
+            ret = sensor_put()
+        else:
+            ret = ('Method Not Allowed', 405)
+    
+    # Send Return
+    print('sensor: ', ret)
+    return ret
 
-    return (ret, 200)
-
-def sensor_get():
-    pass
+def sensor_get(dev_id):
+    return ({'id': dev_id, 'temp': 25, 'humid': 75}, 200)
 
 def sensor_put():
-    pass
+    print('sensor_put')
+    return ('PUT', 200)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))

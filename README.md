@@ -1,6 +1,12 @@
 # DS IOT API
 
-## Endpoints
+## Endpoint Tests
+
+* curl http://localhost:8080/sensor/8563
+* curl --header "Content-Type: application/json" \
+  --request PUT \
+  --data '{"temp":"33", "humid": "78"}' \
+  http://localhost:8080/sensor/8563
 
 ## Desenvolvimento e Testes
 
