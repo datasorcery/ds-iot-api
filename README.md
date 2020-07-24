@@ -35,10 +35,17 @@ Criar imagem do container
 Deploy image
 
 * gcloud run deploy --image gcr.io/ds-iot-api/sensor-api --platform managed
+* `Service Name`: sensor-api
+* `region`: us-central1 
 
 Test by acessing:
 
 * https://sensor-api-z2fblziqeq-uc.a.run.app
+* https://sensor-api-z2fblziqeq-uc.a.run.app/sensor/8563
+* curl --header "Content-Type: application/json"\
+   --request PUT\
+   --data '{"temp":"15", "humid": "55"}'\
+   https://sensor-api-z2fblziqeq-uc.a.run.app/sensor/8563
 
 
 # Deploy alternativo - Cloud Functions
@@ -58,3 +65,11 @@ Para fazer deploy de uma Cloud Function, defina seu código no arquivo `main.py`
 Para este projeto, utilize
 
 * gcloud functions deploy sensor --runtime python37 --trigger-http --allow-unauthenticated
+
+# Referencias
+
+* https://flask.palletsprojects.com/en/1.1.x/quickstart/#http-methods
+* https://www.restapitutorial.com/httpstatuscodes.html
+* https://flask.palletsprojects.com/en/1.1.x/api/#flask.request
+* https://www.restapitutorial.com/lessons/httpmethods.html#:~:text=The%20primary%20or%20most%2Dcommonly,but%20are%20utilized%20less%20frequently.
+* https://cloud.google.com/run/docs/quickstarts/build-and-deploy#writing

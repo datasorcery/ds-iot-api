@@ -13,8 +13,9 @@ app = Flask(__name__)
 
 # Setup credential for local development
 pwd = path.dirname(path.abspath(__file__))
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="{}/gcp.json".format(pwd)
-
+local_credential_file = "{}/gcp.json".format(pwd)
+if os.path.isfile(local_credential_file):
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"]=local_credential_file
 
 @app.route('/')
 def hello_world():
